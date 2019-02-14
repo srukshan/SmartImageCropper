@@ -1,0 +1,2 @@
+# SmartImageCropper
+Smart Image Cropper
