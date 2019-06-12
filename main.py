@@ -33,7 +33,7 @@ while True:
     if imgMargin >= 0:
         break
     print('    Warning! Invalid Image Margin')
-    
+
 imgQuality = input('    Image Quality : ')
 if imgQuality == '':
     imgQuality = 70
@@ -51,22 +51,22 @@ path = pathManager.pathManager(loc, desc)
 while path.hasNext():
     mpath = path.getNext()
     print('    Processing ('+str(path.getPercentage())+'% Completed) - {0} - Image Uploading'.format(path.getCurrentFileName()), end='\r')
-    
+
     im = imageProcessor.getImage(mpath,imgSize)
     print('    Processing ('+str(path.getPercentage())+'% Completed) - {0} - Image Uploaded           '.format(path.getCurrentFileName()), end='\r')
-    
+
     imageProcessor.sliceImg(im)
     print('    Processing ('+str(path.getPercentage())+'% Completed) - {0} - Smart Cropping Completed     '.format(path.getCurrentFileName()), end='\r')
-    
+
     imageProcessor.arr2rImage(im)
     im.RealImage = imageProcessor.resize(im.RealImage, (imgSize-(imgMargin*2)))
     im.RealImage = imageProcessor.expand(im.RealImage, imgSize, im.bgColor)
     print('    Processing ('+str(path.getPercentage())+'% Completed) - {0} - Smart Resizing Completed      '.format(path.getCurrentFileName()), end='\r')
-    
+
     imageProcessor.saveImage(im, path.getCurrentDestination(), imgQuality)
     print('                                                                                                ', end='\r')
     print('    {0} Processed and saved as {1}'.format(path.getCurrentFileName(),path.getCurrentDestination()))
-    
+
     if im.bgDifference>50:
         path.moveProcessed('error')
     elif im.bgDifference>20:
